@@ -1,36 +1,27 @@
+---
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
-		<title>Go Walking</title>
-		<description>the material experience for jekyll</description>
-		<link></link>
-		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-		
+		<title>{{ site.name | xml_escape }}</title>
+		<description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
+		<link>{{ site.url }}</link>
+		<atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml" />
+		{% for post in site.posts limit:100 %}
 			<item>
-				<title>Rainham RSPB</title>
-				
-				
-					<description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus congue enim vel mi semper, nec pellentesque risus faucibus. Donec at tellus ut dui rhoncus faucibus. Donec consectetur facilisis dictum. Praesent ut efficitur magna. Donec et lectus nisi. Etiam congue, urna non rhoncus finibus, dui sem vulputate ligula, ac elementum felis lacus vitae enim. Cras vel laoreet sem. Cras magna lacus, tempor non ultricies a, elementum in ipsum.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Sat, 01 Apr 2017 00:00:00 +0100</pubDate>
-				<link>/rainham-rspb/</link>
-				<guid isPermaLink="true">/rainham-rspb/</guid>
+				<title>{{ post.title | xml_escape }}</title>
+				{% if post.author.name %}
+					<dc:creator>{{ post.author.name | xml_escape }}</dc:creator>
+				{% endif %}
+				{% if post.excerpt %}
+					<description>{{ post.excerpt | xml_escape }}</description>
+				{% else %}
+					<description>{{ post.content | xml_escape }}</description>
+				{% endif %}
+				<pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+				<link>{{ site.url }}{{ post.url }}</link>
+				<guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
 			</item>
-		
-			<item>
-				<title>Parsoles Park</title>
-				
-				
-					<description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus congue enim vel mi semper, nec pellentesque risus faucibus. Donec at tellus ut dui rhoncus faucibus. Donec consectetur facilisis dictum. Praesent ut efficitur magna. Donec et lectus nisi. Etiam congue, urna non rhoncus finibus, dui sem vulputate ligula, ac elementum felis lacus vitae enim. Cras vel laoreet sem. Cras magna lacus, tempor non ultricies a, elementum in ipsum.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Thu, 30 Mar 2017 00:00:00 +0100</pubDate>
-				<link>/parsoles-park/</link>
-				<guid isPermaLink="true">/parsoles-park/</guid>
-			</item>
-		
+		{% endfor %}
 	</channel>
 </rss>
